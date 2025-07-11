@@ -1,9 +1,10 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Trophy, Users, DollarSign, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { Plus, Trophy, Users, DollarSign, Clock, CheckCircle2, XCircle, Zap, Target, Flame } from "lucide-react";
 import { CreateWagerDialog } from "@/components/CreateWagerDialog";
 import { WagerCard } from "@/components/WagerCard";
 import { Wager } from "@/types/wager";
@@ -69,24 +70,29 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/10">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       {/* Header */}
-      <div className="bg-card border-b border-border sticky top-0 z-10">
+      <div className="edgy-header sticky top-0 z-10">
         <div className="max-w-md mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <Trophy className="w-5 h-5 text-primary-foreground" />
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-lg flex items-center justify-center rotate-3 shadow-lg shadow-primary/25">
+                  <Zap className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full animate-pulse"></div>
               </div>
-              <h1 className="text-xl font-bold text-foreground">WagerPal</h1>
+              <div>
+                <h1 className="text-xl font-bold neon-text uppercase tracking-wide">WagerPal</h1>
+                <p className="text-xs text-muted-foreground uppercase tracking-widest">Bet • Win • Dominate</p>
+              </div>
             </div>
             <Button 
               onClick={() => setIsCreateDialogOpen(true)}
-              size="sm"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+              className="edgy-button px-4 py-2"
             >
               <Plus className="w-4 h-4 mr-1" />
-              New Bet
+              <span className="text-xs">New Bet</span>
             </Button>
           </div>
         </div>
@@ -95,50 +101,62 @@ const Index = () => {
       <div className="max-w-md mx-auto px-4 py-6 pb-20">
         {/* Stats Cards */}
         <div className="grid grid-cols-3 gap-3 mb-6">
-          <Card className="text-center">
-            <CardContent className="p-3">
-              <DollarSign className="w-5 h-5 text-primary mx-auto mb-1" />
+          <Card className="edgy-card text-center p-3">
+            <CardContent className="p-0">
+              <div className="flex items-center justify-center mb-2">
+                <DollarSign className="w-5 h-5 text-primary" />
+                <Flame className="w-3 h-3 text-primary ml-1" />
+              </div>
               <div className="text-lg font-bold text-foreground">${totalWagered}</div>
-              <div className="text-xs text-muted-foreground">Total Wagered</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Total Wagered</div>
             </CardContent>
           </Card>
-          <Card className="text-center">
-            <CardContent className="p-3">
-              <Trophy className="w-5 h-5 text-primary mx-auto mb-1" />
+          <Card className="edgy-card text-center p-3">
+            <CardContent className="p-0">
+              <div className="flex items-center justify-center mb-2">
+                <Trophy className="w-5 h-5 text-primary" />
+                <Target className="w-3 h-3 text-primary ml-1" />
+              </div>
               <div className="text-lg font-bold text-foreground">${totalWon}</div>
-              <div className="text-xs text-muted-foreground">Total Won</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Total Won</div>
             </CardContent>
           </Card>
-          <Card className="text-center">
-            <CardContent className="p-3">
-              <Users className="w-5 h-5 text-primary mx-auto mb-1" />
+          <Card className="edgy-card text-center p-3">
+            <CardContent className="p-0">
+              <div className="flex items-center justify-center mb-2">
+                <Users className="w-5 h-5 text-primary" />
+                <Zap className="w-3 h-3 text-primary ml-1" />
+              </div>
               <div className="text-lg font-bold text-foreground">{activeWagers.length}</div>
-              <div className="text-xs text-muted-foreground">Active Bets</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Active Bets</div>
             </CardContent>
           </Card>
         </div>
 
         {/* Wager Tabs */}
         <Tabs defaultValue="active" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-4">
-            <TabsTrigger value="active" className="text-xs">
+          <TabsList className="grid w-full grid-cols-3 mb-4 bg-card border border-primary/20">
+            <TabsTrigger value="active" className="text-xs font-bold uppercase tracking-wide data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Active ({activeWagers.length})
             </TabsTrigger>
-            <TabsTrigger value="pending" className="text-xs">
+            <TabsTrigger value="pending" className="text-xs font-bold uppercase tracking-wide data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Pending ({pendingWagers.length})
             </TabsTrigger>
-            <TabsTrigger value="completed" className="text-xs">
+            <TabsTrigger value="completed" className="text-xs font-bold uppercase tracking-wide data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Completed ({completedWagers.length})
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="active" className="space-y-3">
+          <TabsContent value="active" className="space-y-4">
             {activeWagers.length === 0 ? (
-              <Card className="text-center py-8">
+              <Card className="edgy-card text-center py-8">
                 <CardContent>
-                  <Clock className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                  <p className="text-muted-foreground">No active wagers</p>
-                  <p className="text-sm text-muted-foreground">Create a new bet to get started!</p>
+                  <div className="flex justify-center mb-3">
+                    <Clock className="w-12 h-12 text-muted-foreground" />
+                    <Zap className="w-6 h-6 text-primary ml-2" />
+                  </div>
+                  <p className="text-muted-foreground font-bold uppercase tracking-wide">No Active Wagers</p>
+                  <p className="text-sm text-muted-foreground">Time to make some moves!</p>
                 </CardContent>
               </Card>
             ) : (
@@ -148,12 +166,15 @@ const Index = () => {
             )}
           </TabsContent>
 
-          <TabsContent value="pending" className="space-y-3">
+          <TabsContent value="pending" className="space-y-4">
             {pendingWagers.length === 0 ? (
-              <Card className="text-center py-8">
+              <Card className="edgy-card text-center py-8">
                 <CardContent>
-                  <Clock className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                  <p className="text-muted-foreground">No pending wagers</p>
+                  <div className="flex justify-center mb-3">
+                    <Clock className="w-12 h-12 text-muted-foreground" />
+                    <Target className="w-6 h-6 text-primary ml-2" />
+                  </div>
+                  <p className="text-muted-foreground font-bold uppercase tracking-wide">No Pending Wagers</p>
                 </CardContent>
               </Card>
             ) : (
@@ -163,12 +184,15 @@ const Index = () => {
             )}
           </TabsContent>
 
-          <TabsContent value="completed" className="space-y-3">
+          <TabsContent value="completed" className="space-y-4">
             {completedWagers.length === 0 ? (
-              <Card className="text-center py-8">
+              <Card className="edgy-card text-center py-8">
                 <CardContent>
-                  <CheckCircle2 className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                  <p className="text-muted-foreground">No completed wagers</p>
+                  <div className="flex justify-center mb-3">
+                    <CheckCircle2 className="w-12 h-12 text-muted-foreground" />
+                    <Flame className="w-6 h-6 text-primary ml-2" />
+                  </div>
+                  <p className="text-muted-foreground font-bold uppercase tracking-wide">No Completed Wagers</p>
                 </CardContent>
               </Card>
             ) : (
