@@ -1,22 +1,9 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { CalendarDays, DollarSign, Users, Trophy, Clock, CheckCircle2, AlertCircle } from "lucide-react";
-
-interface Wager {
-  id: number;
-  title: string;
-  description: string;
-  amount: number;
-  participants: string[];
-  status: "active" | "pending" | "completed";
-  creator: string;
-  dueDate: string;
-  odds: string;
-  winner?: string;
-}
+import { Wager } from "@/types/wager";
 
 interface WagerCardProps {
   wager: Wager;

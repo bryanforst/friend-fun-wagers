@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,16 +6,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Trophy, Users, DollarSign, Clock, CheckCircle2, XCircle } from "lucide-react";
 import { CreateWagerDialog } from "@/components/CreateWagerDialog";
 import { WagerCard } from "@/components/WagerCard";
+import { Wager } from "@/types/wager";
 
 // Mock data for demonstration
-const mockWagers = [
+const mockWagers: Wager[] = [
   {
     id: 1,
     title: "Lakers vs Warriors Game",
     description: "Lakers will win by 10+ points",
     amount: 50,
     participants: ["You", "Mike", "Sarah"],
-    status: "active",
+    status: "active" as const,
     creator: "You",
     dueDate: "2024-01-15",
     odds: "2:1"
@@ -27,7 +27,7 @@ const mockWagers = [
     description: "Chiefs will win the Super Bowl",
     amount: 100,
     participants: ["You", "Alex"],
-    status: "pending",
+    status: "pending" as const,
     creator: "Alex",
     dueDate: "2024-02-11",
     odds: "3:2"
@@ -38,7 +38,7 @@ const mockWagers = [
     description: "It will rain this weekend",
     amount: 25,
     participants: ["You", "Jenny", "Tom"],
-    status: "completed",
+    status: "completed" as const,
     creator: "Jenny",
     dueDate: "2024-01-08",
     odds: "1:1",
@@ -47,7 +47,7 @@ const mockWagers = [
 ];
 
 const Index = () => {
-  const [wagers, setWagers] = useState(mockWagers);
+  const [wagers, setWagers] = useState<Wager[]>(mockWagers);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
   const activeWagers = wagers.filter(w => w.status === "active");
@@ -58,10 +58,10 @@ const Index = () => {
   const totalWon = completedWagers.filter(w => w.winner === "You").reduce((sum, wager) => sum + wager.amount, 0);
 
   const handleCreateWager = (wagerData: any) => {
-    const newWager = {
+    const newWager: Wager = {
       id: wagers.length + 1,
       ...wagerData,
-      status: "pending",
+      status: "pending" as const,
       creator: "You"
     };
     setWagers([newWager, ...wagers]);
