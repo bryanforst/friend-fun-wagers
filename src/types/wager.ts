@@ -10,4 +10,14 @@ export interface Wager {
   dueDate: string;
   odds: string;
   winner?: string;
+  gameId: string;
+  gameName: string;
+}
+
+export interface Game {
+  id: string;
+  name: string;
+  category: string;
+  date: string;
+  wagers: Wager[];
 }
