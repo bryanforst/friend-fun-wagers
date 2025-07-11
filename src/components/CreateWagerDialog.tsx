@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -67,8 +66,8 @@ export function CreateWagerDialog({ open, onOpenChange, onCreateWager }: CreateW
       <DialogContent className="sm:max-w-md mx-4">
         <DialogHeader>
           <DialogTitle className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
-              <Plus className="w-4 h-4 text-white" />
+            <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+              <Plus className="w-4 h-4 text-primary-foreground" />
             </div>
             <span>Create New Wager</span>
           </DialogTitle>
@@ -187,7 +186,7 @@ export function CreateWagerDialog({ open, onOpenChange, onCreateWager }: CreateW
           {/* Create Button */}
           <Button 
             onClick={handleCreateWager}
-            className="w-full bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
             disabled={!title || !description || !amount || !dueDate}
           >
             Create Wager

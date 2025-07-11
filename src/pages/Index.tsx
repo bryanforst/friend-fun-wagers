@@ -69,21 +69,21 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/10">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <div className="bg-card border-b border-border sticky top-0 z-10">
         <div className="max-w-md mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
-                <Trophy className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                <Trophy className="w-5 h-5 text-primary-foreground" />
               </div>
-              <h1 className="text-xl font-bold text-gray-900">WagerPal</h1>
+              <h1 className="text-xl font-bold text-foreground">WagerPal</h1>
             </div>
             <Button 
               onClick={() => setIsCreateDialogOpen(true)}
               size="sm"
-              className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               <Plus className="w-4 h-4 mr-1" />
               New Bet
@@ -97,23 +97,23 @@ const Index = () => {
         <div className="grid grid-cols-3 gap-3 mb-6">
           <Card className="text-center">
             <CardContent className="p-3">
-              <DollarSign className="w-5 h-5 text-blue-500 mx-auto mb-1" />
-              <div className="text-lg font-bold text-gray-900">${totalWagered}</div>
-              <div className="text-xs text-gray-500">Total Wagered</div>
+              <DollarSign className="w-5 h-5 text-primary mx-auto mb-1" />
+              <div className="text-lg font-bold text-foreground">${totalWagered}</div>
+              <div className="text-xs text-muted-foreground">Total Wagered</div>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="p-3">
-              <Trophy className="w-5 h-5 text-green-500 mx-auto mb-1" />
-              <div className="text-lg font-bold text-gray-900">${totalWon}</div>
-              <div className="text-xs text-gray-500">Total Won</div>
+              <Trophy className="w-5 h-5 text-primary mx-auto mb-1" />
+              <div className="text-lg font-bold text-foreground">${totalWon}</div>
+              <div className="text-xs text-muted-foreground">Total Won</div>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="p-3">
-              <Users className="w-5 h-5 text-purple-500 mx-auto mb-1" />
-              <div className="text-lg font-bold text-gray-900">{activeWagers.length}</div>
-              <div className="text-xs text-gray-500">Active Bets</div>
+              <Users className="w-5 h-5 text-primary mx-auto mb-1" />
+              <div className="text-lg font-bold text-foreground">{activeWagers.length}</div>
+              <div className="text-xs text-muted-foreground">Active Bets</div>
             </CardContent>
           </Card>
         </div>
@@ -136,9 +136,9 @@ const Index = () => {
             {activeWagers.length === 0 ? (
               <Card className="text-center py-8">
                 <CardContent>
-                  <Clock className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-500">No active wagers</p>
-                  <p className="text-sm text-gray-400">Create a new bet to get started!</p>
+                  <Clock className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                  <p className="text-muted-foreground">No active wagers</p>
+                  <p className="text-sm text-muted-foreground">Create a new bet to get started!</p>
                 </CardContent>
               </Card>
             ) : (
@@ -152,8 +152,8 @@ const Index = () => {
             {pendingWagers.length === 0 ? (
               <Card className="text-center py-8">
                 <CardContent>
-                  <Clock className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-500">No pending wagers</p>
+                  <Clock className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                  <p className="text-muted-foreground">No pending wagers</p>
                 </CardContent>
               </Card>
             ) : (
@@ -167,8 +167,8 @@ const Index = () => {
             {completedWagers.length === 0 ? (
               <Card className="text-center py-8">
                 <CardContent>
-                  <CheckCircle2 className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-500">No completed wagers</p>
+                  <CheckCircle2 className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                  <p className="text-muted-foreground">No completed wagers</p>
                 </CardContent>
               </Card>
             ) : (
