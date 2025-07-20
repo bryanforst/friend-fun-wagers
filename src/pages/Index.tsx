@@ -28,7 +28,23 @@ const mockGames: Game[] = [
         dueDate: "2024-01-15",
         odds: "2:1",
         gameId: "lakers-vs-warriors",
-        gameName: "Lakers vs Warriors"
+        gameName: "Lakers vs Warriors",
+        comments: [
+          {
+            id: 1,
+            author: "Mike",
+            content: "Lakers looking strong this season!",
+            timestamp: "2024-01-10T14:30:00Z",
+            wagerId: 1
+          },
+          {
+            id: 2,
+            author: "Sarah",
+            content: "Warriors still have the experience edge",
+            timestamp: "2024-01-10T15:45:00Z",
+            wagerId: 1
+          }
+        ]
       },
       {
         id: 4,
@@ -41,7 +57,8 @@ const mockGames: Game[] = [
         dueDate: "2024-01-15",
         odds: "1.5:1",
         gameId: "lakers-vs-warriors",
-        gameName: "Lakers vs Warriors"
+        gameName: "Lakers vs Warriors",
+        comments: []
       }
     ]
   },
@@ -62,7 +79,16 @@ const mockGames: Game[] = [
         dueDate: "2024-02-11",
         odds: "3:2",
         gameId: "super-bowl",
-        gameName: "Super Bowl LVIII"
+        gameName: "Super Bowl LVIII",
+        comments: [
+          {
+            id: 3,
+            author: "Alex",
+            content: "Chiefs have been dominating the playoffs!",
+            timestamp: "2024-01-20T10:15:00Z",
+            wagerId: 2
+          }
+        ]
       }
     ]
   },
@@ -84,7 +110,16 @@ const mockGames: Game[] = [
         odds: "1:1",
         winner: "Jenny",
         gameId: "weekend-weather",
-        gameName: "Weekend Weather"
+        gameName: "Weekend Weather",
+        comments: [
+          {
+            id: 4,
+            author: "Tom",
+            content: "Called it! The forecast was clear",
+            timestamp: "2024-01-08T16:00:00Z",
+            wagerId: 3
+          }
+        ]
       }
     ]
   }
@@ -111,7 +146,8 @@ const Index = () => {
       status: "pending" as const,
       creator: "You",
       gameId: games[0]?.id || "new-game",
-      gameName: games[0]?.name || "New Game"
+      gameName: games[0]?.name || "New Game",
+      comments: []
     };
     
     const updatedGames = [...games];
@@ -120,6 +156,27 @@ const Index = () => {
       setGames(updatedGames);
     }
     setIsCreateDialogOpen(false);
+  };
+
+  const handleAddComment = (wagerId: number, content: string) => {
+    const newComment = {
+      id: Date.now(), // Simple ID generation for demo
+      author: "You",
+      content,
+      timestamp: new Date().toISOString(),
+      wagerId
+    };
+
+    const updatedGames = games.map(game => ({
+      ...game,
+      wagers: game.wagers.map(wager => 
+        wager.id === wagerId 
+          ? { ...wager, comments: [...wager.comments, newComment] }
+          : wager
+      )
+    }));
+
+    setGames(updatedGames);
   };
 
   return (
@@ -201,7 +258,7 @@ const Index = () => {
             </Card>
           ) : (
             games.map((game) => (
-              <GameCard key={game.id} game={game} />
+              <GameCard key={game.id} game={game} onAddComment={handleAddComment} />
             ))
           )}
         </div>

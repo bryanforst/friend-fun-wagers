@@ -9,9 +9,10 @@ import { Game } from "@/types/wager";
 
 interface GameCardProps {
   game: Game;
+  onAddComment?: (wagerId: number, content: string) => void;
 }
 
-export function GameCard({ game }: GameCardProps) {
+export function GameCard({ game, onAddComment }: GameCardProps) {
   const [isOpen, setIsOpen] = useState(true);
   
   const totalAmount = game.wagers.reduce((sum, wager) => sum + wager.amount, 0);
@@ -87,7 +88,7 @@ export function GameCard({ game }: GameCardProps) {
           <CardContent className="pt-0">
             <div className="space-y-3">
               {game.wagers.map((wager) => (
-                <WagerCard key={wager.id} wager={wager} />
+                <WagerCard key={wager.id} wager={wager} onAddComment={onAddComment} />
               ))}
             </div>
           </CardContent>

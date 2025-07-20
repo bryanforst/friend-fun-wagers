@@ -4,13 +4,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { CalendarDays, DollarSign, Users, Trophy, Clock, CheckCircle2, AlertCircle, Zap, Target, Flame } from "lucide-react";
-import { Wager } from "@/types/wager";
+import { Wager, Comment } from "@/types/wager";
+import { CommentThread } from "./CommentThread";
 
 interface WagerCardProps {
   wager: Wager;
+  onAddComment?: (wagerId: number, content: string) => void;
 }
 
-export function WagerCard({ wager }: WagerCardProps) {
+export function WagerCard({ wager, onAddComment }: WagerCardProps) {
   const getStatusIcon = () => {
     switch (wager.status) {
       case "active":
@@ -145,6 +147,14 @@ export function WagerCard({ wager }: WagerCardProps) {
               View Details
             </Button>
           )}
+
+          {/* Comment Thread */}
+          <div className="pt-2 border-t border-primary/20">
+            <CommentThread 
+              comments={wager.comments}
+              onAddComment={(content) => onAddComment?.(wager.id, content)}
+            />
+          </div>
         </div>
       </CardContent>
     </Card>

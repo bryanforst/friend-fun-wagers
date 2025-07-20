@@ -1,4 +1,12 @@
 
+export interface Comment {
+  id: number;
+  author: string;
+  content: string;
+  timestamp: string;
+  wagerId: number;
+}
+
 export interface Wager {
   id: number;
   title: string;
@@ -12,6 +20,7 @@ export interface Wager {
   winner?: string;
   gameId: string;
   gameName: string;
+  comments: Comment[];
 }
 
 export interface Game {
