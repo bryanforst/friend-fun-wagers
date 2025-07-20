@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Trophy, Users, DollarSign, Clock, CheckCircle2, XCircle, Zap, Target, Flame } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { CreateWagerDialog } from "@/components/CreateWagerDialog";
 import { WagerCard } from "@/components/WagerCard";
 import { GameCard } from "@/components/GameCard";
@@ -126,6 +127,7 @@ const mockGames: Game[] = [
 ];
 
 const Index = () => {
+  const navigate = useNavigate();
   const [games, setGames] = useState<Game[]>(mockGames);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
@@ -241,6 +243,18 @@ const Index = () => {
               <div className="text-xs text-muted-foreground uppercase tracking-wide">Active Bets</div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="mb-6">
+          <Button 
+            onClick={() => navigate("/leaderboard")}
+            variant="outline"
+            className="w-full edgy-button flex items-center justify-center gap-2"
+          >
+            <Trophy className="w-4 h-4" />
+            View Leaderboard
+          </Button>
         </div>
 
         {/* Games List */}
