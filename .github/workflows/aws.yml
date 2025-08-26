@@ -20,6 +20,6 @@ jobs:
         with:
           node-version: 18
       - name: Build React App
-        run: cnpm install env-cmd --save && npm ci && npm run build
+        run: npm install env-cmd --save && npm ci && npm run build
       - name: Deploy app build to S3 bucket
         run: aws s3 sync ./build/ s3://casual-wager-prod --delete
