@@ -196,7 +196,7 @@ const Index = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold neon-text uppercase tracking-wide">WagerPal</h1>
-                <p className="text-xs text-muted-foreground uppercase tracking-widest">Bet • Win • Dominate</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-widest">Bet • Win • Challenge</p>
               </div>
             </div>
             <Button 
