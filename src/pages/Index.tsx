@@ -5,12 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Trophy, Users, DollarSign, Clock, CheckCircle2, XCircle, Zap, Target, Flame } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { CreateWagerDialog } from "@/components/CreateWagerDialog";
+
 import { WagerCard } from "@/components/WagerCard";
 import { GameCard } from "@/components/GameCard";
 import { Wager, Game } from "@/types/wager";
 
-// Mock data for demonstration - now organized by games
+// Mock data for house propositions - organized by games
 const mockGames: Game[] = [
   {
     id: "lakers-vs-warriors",
@@ -20,12 +20,12 @@ const mockGames: Game[] = [
     wagers: [
       {
         id: 1,
-        title: "Lakers Win Margin",
-        description: "Lakers will win by 10+ points",
+        title: "Lakers Win by 10+",
+        description: "The house is offering 2:1 odds that Lakers will win by 10 or more points",
         amount: 50,
-        participants: ["You", "Mike", "Sarah"],
+        participants: ["Mike", "Sarah"],
         status: "active" as const,
-        creator: "You",
+        creator: "House",
         dueDate: "2024-01-15",
         odds: "2:1",
         gameId: "lakers-vs-warriors",
@@ -34,14 +34,14 @@ const mockGames: Game[] = [
           {
             id: 1,
             author: "Mike",
-            content: "Lakers looking strong this season!",
+            content: "Lakers looking strong this season! I'm in.",
             timestamp: "2024-01-10T14:30:00Z",
             wagerId: 1
           },
           {
             id: 2,
             author: "Sarah",
-            content: "Warriors still have the experience edge",
+            content: "Warriors defense could keep it close though",
             timestamp: "2024-01-10T15:45:00Z",
             wagerId: 1
           }
@@ -49,14 +49,28 @@ const mockGames: Game[] = [
       },
       {
         id: 4,
-        title: "Total Points Over/Under",
-        description: "Total points will be over 220",
+        title: "Total Points Over 220",
+        description: "House proposition: Total game points will exceed 220. Accept this wager?",
         amount: 75,
-        participants: ["You", "Chris"],
+        participants: [],
         status: "pending" as const,
-        creator: "Chris",
+        creator: "House",
         dueDate: "2024-01-15",
-        odds: "1.5:1",
+        odds: "1.8:1",
+        gameId: "lakers-vs-warriors",
+        gameName: "Lakers vs Warriors",
+        comments: []
+      },
+      {
+        id: 5,
+        title: "Curry 30+ Points",
+        description: "House offers 3:1 odds that Stephen Curry will score 30 or more points",
+        amount: 40,
+        participants: [],
+        status: "pending" as const,
+        creator: "House",
+        dueDate: "2024-01-15",
+        odds: "3:1",
         gameId: "lakers-vs-warriors",
         gameName: "Lakers vs Warriors",
         comments: []
@@ -71,56 +85,84 @@ const mockGames: Game[] = [
     wagers: [
       {
         id: 2,
-        title: "Super Bowl Winner",
-        description: "Chiefs will win the Super Bowl",
+        title: "Chiefs to Win",
+        description: "House proposition: Kansas City Chiefs will win Super Bowl LVIII",
         amount: 100,
-        participants: ["You", "Alex"],
-        status: "pending" as const,
-        creator: "Alex",
+        participants: ["Alex"],
+        status: "active" as const,
+        creator: "House",
         dueDate: "2024-02-11",
-        odds: "3:2",
+        odds: "1.5:1",
         gameId: "super-bowl",
         gameName: "Super Bowl LVIII",
         comments: [
           {
             id: 3,
             author: "Alex",
-            content: "Chiefs have been dominating the playoffs!",
+            content: "Chiefs have been dominating! Easy money.",
             timestamp: "2024-01-20T10:15:00Z",
             wagerId: 2
           }
         ]
+      },
+      {
+        id: 6,
+        title: "First Half Over 28.5",
+        description: "House wager: First half total points will be over 28.5",
+        amount: 60,
+        participants: [],
+        status: "pending" as const,
+        creator: "House",
+        dueDate: "2024-02-11",
+        odds: "1.9:1",
+        gameId: "super-bowl",
+        gameName: "Super Bowl LVIII",
+        comments: []
       }
     ]
   },
   {
-    id: "weekend-weather",
-    name: "Weekend Weather",
-    category: "Weather",
-    date: "2024-01-08T12:00:00Z",
+    id: "crypto-predictions",
+    name: "Bitcoin Weekly",
+    category: "Crypto",
+    date: "2024-01-12T23:59:00Z",
     wagers: [
       {
         id: 3,
-        title: "Saturday Rain",
-        description: "It will rain this weekend",
-        amount: 25,
-        participants: ["You", "Jenny", "Tom"],
+        title: "Bitcoin Above $45K",
+        description: "House proposition: Bitcoin will close above $45,000 this Friday",
+        amount: 80,
+        participants: ["Jenny", "Tom"],
         status: "completed" as const,
-        creator: "Jenny",
-        dueDate: "2024-01-08",
-        odds: "1:1",
-        winner: "Jenny",
-        gameId: "weekend-weather",
-        gameName: "Weekend Weather",
+        creator: "House",
+        dueDate: "2024-01-12",
+        odds: "2.2:1",
+        winner: "House",
+        gameId: "crypto-predictions",
+        gameName: "Bitcoin Weekly",
         comments: [
           {
             id: 4,
             author: "Tom",
-            content: "Called it! The forecast was clear",
-            timestamp: "2024-01-08T16:00:00Z",
+            content: "Crypto markets are so unpredictable!",
+            timestamp: "2024-01-12T16:00:00Z",
             wagerId: 3
           }
         ]
+      },
+      {
+        id: 7,
+        title: "ETH Outperforms BTC",
+        description: "House wager: Ethereum will outperform Bitcoin this week (% gains)",
+        amount: 45,
+        participants: [],
+        status: "pending" as const,
+        creator: "House",
+        dueDate: "2024-01-19",
+        odds: "1.7:1",
+        gameId: "crypto-predictions",
+        gameName: "Bitcoin Weekly",
+        comments: []
       }
     ]
   }
@@ -129,7 +171,7 @@ const mockGames: Game[] = [
 const Index = () => {
   const navigate = useNavigate();
   const [games, setGames] = useState<Game[]>(mockGames);
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  
 
   // Flatten all wagers for stats calculation
   const allWagers = games.flatMap(game => game.wagers);
@@ -137,28 +179,10 @@ const Index = () => {
   const pendingWagers = allWagers.filter(w => w.status === "pending");
   const completedWagers = allWagers.filter(w => w.status === "completed");
 
-  const totalWagered = allWagers.reduce((sum, wager) => sum + wager.amount, 0);
-  const totalWon = completedWagers.filter(w => w.winner === "You").reduce((sum, wager) => sum + wager.amount, 0);
+  // Calculate player stats vs house
+  const totalAvailable = pendingWagers.reduce((sum, wager) => sum + wager.amount, 0);
+  const totalWon = completedWagers.filter(w => w.winner !== "House").reduce((sum, wager) => sum + wager.amount, 0);
 
-  const handleCreateWager = (wagerData: any) => {
-    // For demo purposes, add to the first game
-    const newWager: Wager = {
-      id: allWagers.length + 1,
-      ...wagerData,
-      status: "pending" as const,
-      creator: "You",
-      gameId: games[0]?.id || "new-game",
-      gameName: games[0]?.name || "New Game",
-      comments: []
-    };
-    
-    const updatedGames = [...games];
-    if (updatedGames[0]) {
-      updatedGames[0].wagers = [newWager, ...updatedGames[0].wagers];
-      setGames(updatedGames);
-    }
-    setIsCreateDialogOpen(false);
-  };
 
   const handleAddComment = (wagerId: number, content: string) => {
     const newComment = {
@@ -199,13 +223,10 @@ const Index = () => {
                 <p className="text-xs text-muted-foreground uppercase tracking-widest">Bet • Win • Tickle</p>
               </div>
             </div>
-            <Button 
-              onClick={() => setIsCreateDialogOpen(true)}
-              className="edgy-button px-4 py-2"
-            >
-              <Plus className="w-4 h-4 mr-1" />
-              <span className="text-xs">New Bet</span>
-            </Button>
+            <div className="flex items-center space-x-1 bg-primary/10 px-3 py-1.5 rounded-lg border border-primary/20">
+              <Target className="w-4 h-4 text-primary" />
+              <span className="text-xs font-bold text-primary uppercase tracking-wide">House Odds</span>
+            </div>
           </div>
         </div>
       </div>
@@ -219,8 +240,8 @@ const Index = () => {
                 <DollarSign className="w-5 h-5 text-primary" />
                 <Flame className="w-3 h-3 text-primary ml-1" />
               </div>
-              <div className="text-lg font-bold text-foreground">${totalWagered}</div>
-              <div className="text-xs text-muted-foreground uppercase tracking-wide">Total Wagered</div>
+              <div className="text-lg font-bold text-foreground">${totalAvailable}</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Available</div>
             </CardContent>
           </Card>
           <Card className="edgy-card text-center p-3">
@@ -239,8 +260,8 @@ const Index = () => {
                 <Users className="w-5 h-5 text-primary" />
                 <Zap className="w-3 h-3 text-primary ml-1" />
               </div>
-              <div className="text-lg font-bold text-foreground">{activeWagers.length}</div>
-              <div className="text-xs text-muted-foreground uppercase tracking-wide">Active Bets</div>
+              <div className="text-lg font-bold text-foreground">{pendingWagers.length}</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Open Bets</div>
             </CardContent>
           </Card>
         </div>
@@ -266,8 +287,8 @@ const Index = () => {
                   <Trophy className="w-12 h-12 text-muted-foreground" />
                   <Zap className="w-6 h-6 text-primary ml-2" />
                 </div>
-                <p className="text-muted-foreground font-bold uppercase tracking-wide">No Games Yet</p>
-                <p className="text-sm text-muted-foreground">Create your first wager to get started!</p>
+                <p className="text-muted-foreground font-bold uppercase tracking-wide">No Propositions</p>
+                <p className="text-sm text-muted-foreground">Check back for new house wagers!</p>
               </CardContent>
             </Card>
           ) : (
@@ -278,11 +299,6 @@ const Index = () => {
         </div>
       </div>
 
-      <CreateWagerDialog 
-        open={isCreateDialogOpen} 
-        onOpenChange={setIsCreateDialogOpen}
-        onCreateWager={handleCreateWager}
-      />
     </div>
   );
 };

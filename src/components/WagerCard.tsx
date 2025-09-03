@@ -131,21 +131,55 @@ export function WagerCard({ wager, onAddComment }: WagerCardProps) {
           </div>
 
           {/* Action Buttons */}
-          {wager.status === "pending" && wager.creator !== "You" && (
-            <div className="flex space-x-2 pt-2">
-              <Button size="sm" className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold uppercase tracking-wide">
-                Accept
-              </Button>
-              <Button size="sm" variant="outline" className="flex-1 font-bold uppercase tracking-wide">
-                Decline
-              </Button>
+          {wager.status === "pending" && wager.creator === "House" && (
+            <div className="space-y-2 pt-3">
+              <div className="bg-primary/5 p-3 rounded-lg border border-primary/20">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-bold text-primary uppercase tracking-wide">House Proposition</span>
+                  <Badge variant="outline" className="text-xs font-bold">
+                    {wager.odds} Payout
+                  </Badge>
+                </div>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Risk ${wager.amount} to win ${Math.round(wager.amount * parseFloat(wager.odds.split(':')[0]))}
+                </p>
+                <div className="flex space-x-2">
+                  <Button size="sm" className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold uppercase tracking-wide shadow-lg shadow-green-500/25">
+                    ✓ Accept Bet
+                  </Button>
+                  <Button size="sm" variant="outline" className="flex-1 font-bold uppercase tracking-wide hover:bg-red-500/10 hover:border-red-500/40 hover:text-red-400">
+                    ✗ Pass
+                  </Button>
+                </div>
+              </div>
             </div>
           )}
 
-          {wager.status === "active" && (
-            <Button size="sm" variant="outline" className="w-full font-bold uppercase tracking-wide">
-              View Details
-            </Button>
+          {wager.status === "active" && wager.creator === "House" && (
+            <div className="pt-3">
+              <div className="bg-primary/5 p-3 rounded-lg border border-primary/20">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-bold text-primary uppercase tracking-wide">Active House Bet</span>
+                  <span className="text-xs text-muted-foreground">{wager.participants.length} players in</span>
+                </div>
+                <Button size="sm" variant="outline" className="w-full font-bold uppercase tracking-wide">
+                  Track Bet
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {wager.status === "completed" && wager.creator === "House" && (
+            <div className="pt-3">
+              <div className="bg-muted/50 p-3 rounded-lg border border-border">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold text-muted-foreground uppercase tracking-wide">Settled</span>
+                  <Badge variant={wager.winner === "House" ? "destructive" : "default"} className="text-xs font-bold">
+                    {wager.winner === "House" ? "House Won" : "Players Won"}
+                  </Badge>
+                </div>
+              </div>
+            </div>
           )}
 
           {/* Comment Thread */}
